@@ -42,10 +42,10 @@
       </div>
 
       <div class="col-span-4">
-        <label class="label">Postal Address</label>
-        <input v-model="form.postalAddress" type="text" class="input" />
-        <div v-if="form.errors.postalAddress" class="input-error">
-          {{ form.errors.postalAddress }}
+        <label class="label">Postal Code</label>
+        <input v-model.number="form.postalCode" type="text" class="input" />
+        <div v-if="form.errors.postalCode" class="input-error">
+          {{ form.errors.postalCode }}
         </div>
       </div>
 
@@ -97,7 +97,7 @@ const form = useForm({
   languageCode: null,
   latitude: null,
   longitude: null,
-  postalAddress: null,
+  postalCode: null,
   city: null,
   state: null,
   locationType: null,

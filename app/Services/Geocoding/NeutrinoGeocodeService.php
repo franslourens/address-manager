@@ -3,6 +3,7 @@
 namespace App\Services\Geocoding;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class NeutrinoGeocodeService implements GeocodeServiceInterface
 {
@@ -35,23 +36,45 @@ class NeutrinoGeocodeService implements GeocodeServiceInterface
             $payload['language-code'] = $options['language_code'];
         }
 
+        $url = config('services.neutrino.geocode_url');
+
         $response = Http::asForm()
             ->timeout(10)
-            ->post('https://neutrinoapi.net/geocode-address', $payload);
+            ->post($url, $payload);
+
+        Log::info('Calling Neutrino API request: ', [
+            'url'     => $url,
+            'payload' => $payload,
+            'status'  => $response->status(),
+            'body'    => $response->json(),
+        ]);
 
         if (!$response->successful()) {
+            $body = $response->json();
+
+            $apiMessage = $body['api-error-msg'] ?? null;
+
+            Log::error('Neutrino API request failed', [
+                'url'     => $url,
+                'payload' => $payload,
+                'status'  => $response->status(),
+                'body'    => $response->body(),
+            ]);
+
             throw new GeocodingException(
-                'Neutrino API error: HTTP ' . $response->status()
+                $apiMessage
+                    ? "Neutrino API error: {$apiMessage}"
+                    : 'Neutrino API error: HTTP ' . $response->status()
             );
         }
 
         $body = $response->json();
         $location = $body['locations'][0] ?? null;
 
-        if (!$location) {
+        if (! $location) {
             return null;
         }
 
-        return GeocodeResult::fromNeutrinoLocation($location);
+        return GeocodeResult::neutrino($location);
     }
 }

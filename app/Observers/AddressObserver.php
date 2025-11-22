@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use Illuminate\Support\Facades\Log;
 use App\Models\Address;
 use App\Jobs\GeocodeAddressJob;
 
@@ -9,6 +10,7 @@ class AddressObserver
 {
     public function created(Address $address): void
     {
+        Log::info('Dispatching GeocodeAddressJob', ['address_id' => $address->id]);
         GeocodeAddressJob::dispatch($address);
     }
 

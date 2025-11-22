@@ -18,8 +18,8 @@ return new class extends Migration
                 ->constrained()
                 ->onDelete('cascade');
 
-            $table->decimal('latitude', 10, 7);
-            $table->decimal('longitude', 10, 7);
+            $table->decimal('latitude', 10, 7)->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
 
             $table->string('canonical_address')->nullable();
             $table->string('country')->nullable();

@@ -19,7 +19,7 @@ class GeocodeResult extends Model
     ];
 
     protected $casts = [
-        'raw' => 'array',
+        'raw' => 'object',
     ];
 
     public function address()

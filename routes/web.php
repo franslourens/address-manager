@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\UserAccountController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +45,8 @@ Route::delete('logout', [AuthController::class, 'destroy'])
 
 Route::resource('user-account', UserAccountController::class)
   ->only(['create', 'store']);
+
+Route::get('/test-log', function () {
+    Log::info('Test log entry from /test-log route');
+    return 'logged';
+});

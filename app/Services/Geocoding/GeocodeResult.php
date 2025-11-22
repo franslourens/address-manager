@@ -14,11 +14,11 @@ class GeocodeResult
         public readonly ?string $countryCode,
         public readonly ?string $locationType,
         public readonly ?string $buildingType,
-        public readonly array $raw = [],
+        public readonly array $raw,
     ) {
     }
 
-    public static function fromNeutrinoLocation(array $location): self
+    public static function neutrino(array $location): self
     {
         return new self(
             formattedAddress: $location['address'] ?? '',
@@ -29,7 +29,7 @@ class GeocodeResult
             state: $location['state'] ?? null,
             countryCode: $location['country-code'] ?? null,
             locationType: $location['location-type'] ?? null,
-            buildingType: $location['building'] ?? null,
+            buildingType: $location['building-type'] ?? null,
             raw: $location,
         );
     }

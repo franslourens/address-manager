@@ -6,8 +6,8 @@
     <span>
       {{ address.status }}
     </span>
-    <span>
-      {{ address.last_error }}
+    <span v-if="address.last_error">
+      | {{ address.last_error }}
     </span> 
   </div>
   <span>
