@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use app\Models\Address;
 
 class User extends Authenticatable
 {
@@ -53,6 +54,14 @@ class User extends Authenticatable
         return Attribute::make(
             get: fn($value) => $value,
             set: fn($value) => Hash::make($value),
+        );
+    }
+
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(
+            Address::class,
+            'by_user_id'
         );
     }
 }

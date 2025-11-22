@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\User;
 
 class Address extends Model
 {
     protected $fillable = [
-        'user_id',
         'line1',
         'line2',
         'city',
@@ -24,9 +25,12 @@ class Address extends Model
     public const STATUS_SUCCESS    = 'success';
     public const STATUS_FAILED     = 'failed';
 
-    public function user()
+    public function owner(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(
+            User::class,
+            'by_user_id'
+        );
     }
 
     public function geocode()

@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Services\Geocoding\GeocodeServiceInterface;
 use App\Services\Geocoding\GeocodingException;
 use App\Models\Address;
 
 class AddressController extends Controller
 {
+    use AuthorizesRequests;
+
     public function create()
     {
         return inertia('Address/Create');
@@ -91,8 +94,7 @@ class AddressController extends Controller
             'locationType'  => ['nullable', 'string', 'max:255'],
         ]);
 
-        $address = Address::create([
-            'user_id'       => $request->user()->id ?? null,
+        $request->user()->addresses()->create([
             'line1'         => $data['address'],
             'line2'         => null,
             'city'          => $data['city'] ?? null,
@@ -108,9 +110,21 @@ class AddressController extends Controller
             ->with('success', 'Address was created!');
     }
 
-    public function show()
+    public function show(Address $address)
     {
-        return inertia('Index/Show');
+        return inertia('Address/Show', ['address' => $address]);
+    }
+
+    public function edit(Address $address)
+    {
+        $this->authorize('view', $address);
+
+        return inertia(
+            'Address/Edit',
+            [
+                'address' => $address
+            ]
+        );
     }
 
     public function update(Request $request, Address $address)
