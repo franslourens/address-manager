@@ -29,6 +29,12 @@ Route::middleware('auth')->group(function () {
 Route::resource('address', AddressController::class)
   ->except(['create', 'store', 'edit', 'update', 'destroy']);
 
+Route::name('address.restore')
+    ->put(
+        'address/{address}/restore',
+        [AddressController::class, 'restore']
+    )->withTrashed();
+
 Route::get('login', [AuthController::class, 'create'])
   ->name('login');
 Route::post('login', [AuthController::class, 'store'])
