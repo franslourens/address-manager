@@ -1,0 +1,48 @@
+server {
+    if ($host = ) {
+        return 301 https://$host$request_uri;
+    } 
+
+    if ($host = ) {
+        return 301 https://$host$request_uri;
+    }
+
+    server_name ;
+    return 404;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name ;
+
+    root public;
+    index index.php index.html;
+
+    ssl_certificate .cer;
+    ssl_certificate_key .key;
+    include /opt/homebrew/etc/nginx/options-ssl-nginx.conf;
+
+    client_max_body_size 999M;
+
+    location / {
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_pass unix:php-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT $document_root;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+
+    location /.well-known/acme-challenge/ {
+        allow all;
+    }
+
+    access_log access.log;
+    error_log error.log;
+}
