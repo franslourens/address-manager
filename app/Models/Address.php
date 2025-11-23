@@ -63,4 +63,9 @@ class Address extends Model
     {
         return $this->latestGeocodeResult?->longitude;
     }
+
+    public function formatted() 
+    {
+        return $this->line1 . " ". $this->city;
+    }
 }
