@@ -55,10 +55,18 @@ class GeocodeAddressJob implements ShouldQueue
                 $address->country_code,
             ]));
 
-            $result = $geocoder->geocode($formattedAddress, [
-                'country_code'  => $address->country_code ?? 'ZA',
+            $options = [
+                'house_number'  => $address->house_number ?? null,
+                'street'        => $address->line1 ?? null,
+                'city'          => $address->city ?? null,
+                'county'        => null,
+                'state'         => $address->province ?? null,
+                'postal_code'   => $address->postal ?? null,
+                'country_code'  => $address->country_code ?? null,
                 'language_code' => 'en',
-            ]);
+            ];
+
+            $result = $geocoder->geocode($formattedAddress, $options);
 
             if (! $result) {
                 Log::warning('No geocode results found', [

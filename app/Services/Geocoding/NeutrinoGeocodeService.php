@@ -23,22 +23,25 @@ class NeutrinoGeocodeService implements GeocodeServiceInterface
         }
 
         $payload = [
-            'user-id' => $this->userId,
-            'api-key' => $this->apiKey,
-            'address' => $address,
+            'address'       => $address,
+            'house-number'  => $options['house_number'] ?? '',
+            'street'        => $options['street'] ?? '',
+            'city'          => $options['city'] ?? '',
+            'county'        => $options['county'] ?? '',
+            'state'         => $options['state'] ?? '',
+            'postal-code'   => $options['postal_code'] ?? '',
+            'country-code'  => $options['country_code'] ?? 'ZA',
+            'language-code' => $options['language_code'] ?? 'en',
+            'fuzzy-search'  => $options['fuzzy_search'] ?? 'false',
         ];
-
-        if (!empty($options['country_code'])) {
-            $payload['country-code'] = $options['country_code'];
-        }
-
-        if (!empty($options['language_code'])) {
-            $payload['language-code'] = $options['language_code'];
-        }
 
         $url = config('services.neutrino.geocode_url');
 
         $response = Http::asForm()
+            ->withHeaders([
+                'User-ID' => $this->userId,
+                'API-Key' => $this->apiKey,
+            ])
             ->timeout(10)
             ->post($url, $payload);
 
