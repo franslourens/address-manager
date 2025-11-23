@@ -3,11 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Http;
-use App\Services\Geocoding\GeocodeServiceInterface;
-use App\Services\Geocoding\GeocodingException;
 use App\Models\Address;
 use App\Repositories\AddressRepository;
 use App\Http\Requests\StoreAddressRequest;
