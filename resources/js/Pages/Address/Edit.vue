@@ -43,7 +43,12 @@
 
       <div class="col-span-6">
         <label class="label">Status</label>
-        <input v-model="form.status" type="text" class="input" />
+        <input 
+          v-model="form.status" 
+          type="text" 
+          class="input bg-gray-100 dark:bg-gray-800 cursor-not-allowed" 
+          readonly 
+        />
         <div v-if="form.errors.status" class="input-error">
           {{ form.errors.status }}
         </div>
