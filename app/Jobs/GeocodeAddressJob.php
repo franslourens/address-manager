@@ -47,14 +47,6 @@ class GeocodeAddressJob implements ShouldQueue
 
         try {
 
-            $formattedAddress = implode(', ', array_filter([
-                $address->line1,
-                $address->city,
-                $address->province,
-                $address->postal,
-                $address->country_code,
-            ]));
-
             $options = [
                 'house_number'  => $address->house_number ?? null,
                 'street'        => $address->line1 ?? null,
@@ -66,7 +58,7 @@ class GeocodeAddressJob implements ShouldQueue
                 'language_code' => 'en',
             ];
 
-            $result = $geocoder->geocode($formattedAddress, $options);
+            $result = $geocoder->geocode($$address->line1, $options);
 
             if (! $result) {
                 Log::warning('No geocode results found', [
