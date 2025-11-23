@@ -10,22 +10,6 @@
       </div>
 
       <div class="col-span-2">
-        <label class="label">Address</label>
-        <input v-model="form.line2" type="text" class="input" />
-        <div v-if="form.errors.line2" class="input-error">
-          {{ form.errors.line2 }}
-        </div>
-      </div>
-
-      <div class="col-span-2">
-        <label class="label">City</label>
-        <input v-model="form.city" type="text" class="input" />
-        <div v-if="form.errors.city" class="input-error">
-          {{ form.errors.city }}
-        </div>
-      </div>
-
-      <div class="col-span-4">
         <label class="label">City</label>
         <input v-model="form.city" type="text" class="input" />
         <div v-if="form.errors.city" class="input-error">

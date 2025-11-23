@@ -3,7 +3,7 @@
     <div class="container mx-auto relative">
       <nav class="p-4 flex items-center justify-between relative">
         
-        <div class="absolute left-1/2 -translate-x-1/2 text-xl text-indigo-600 dark:text-indigo-300 font-bold">
+        <div class="hidden md:block absolute left-1/2 -translate-x-1/2 text-xl text-indigo-600 dark:text-indigo-300 font-bold">
           <Link :href="route('address.index')">Address Manager</Link>
         </div>
 
