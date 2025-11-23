@@ -58,7 +58,7 @@ class GeocodeAddressJob implements ShouldQueue
                 'language_code' => 'en',
             ];
 
-            $result = $geocoder->geocode($$address->line1, $options);
+            $result = $geocoder->geocode($address->line1, $options);
 
             if (! $result) {
                 Log::warning('No geocode results found', [
