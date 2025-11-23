@@ -20,12 +20,13 @@ use Illuminate\Support\Facades\Log;
 Route::get('/', [AddressController::class, 'index']);
 
 Route::middleware('auth')->group(function () {
-    Route::post('address/lookup', [AddressController::class, 'lookup'])
-        ->name('address.lookup');
-
     Route::resource('address', AddressController::class)
         ->only(['create', 'store', 'edit', 'update', 'destroy']);
 });
+
+Route::post('/address/{address}/rerun-geocode', [AddressController::class, 'retryGeocode'])
+    ->name('address.rerun')
+    ->middleware('auth');
 
 Route::resource('address', AddressController::class)
   ->except(['create', 'store', 'edit', 'update', 'destroy']);
@@ -45,8 +46,3 @@ Route::delete('logout', [AuthController::class, 'destroy'])
 
 Route::resource('user-account', UserAccountController::class)
   ->only(['create', 'store']);
-
-Route::get('/test-log', function () {
-    Log::info('Test log entry from /test-log route');
-    return 'logged';
-});

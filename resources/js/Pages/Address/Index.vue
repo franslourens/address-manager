@@ -8,17 +8,14 @@
           <ListingAddress :address="address" />
         </div>
         <section>
-          <div
-            class="flex items-center gap-1 text-gray-600 dark:text-gray-300"
-          >
-            <a
+          <div class="flex items-center gap-1 text-gray-600 dark:text-gray-300">
+            <Link
               class="btn-outline text-xs font-medium"
               :href="route('address.show', { address: address.id })"
-              target="_blank"
             >
               View
-            </a>
-            <template v-if="$page.props.user">
+            </Link>
+            <template v-if="address.belongs_to_user">
               <Link
                 class="btn-outline text-xs font-medium"
                 :href="route('address.edit', { address: address.id })"
@@ -56,6 +53,8 @@
 </template>
 
 <script setup>
+import { computed, onMounted, onBeforeUnmount, watch } from 'vue'
+import { router } from '@inertiajs/vue3'
 
 import Pagination from '@/Components/UI/Pagination.vue'
 import ListingAddress from '@/Components/ListingAddress.vue'
@@ -63,7 +62,55 @@ import Box from '@/Components/UI/Box.vue'
 import EmptyState from '@/Components/UI/EmptyState.vue'
 import { Link } from '@inertiajs/vue3'
 
-defineProps({
+const props = defineProps({
   addresses: Object,
+})
+
+const hasInProgressAddresses = computed(() =>
+  props.addresses?.data?.some(address =>
+    ['pending', 'processing'].includes(address.status)
+  )
+)
+
+let pollTimer = null
+
+const startPolling = () => {
+  if (pollTimer || !hasInProgressAddresses.value) return
+
+  pollTimer = setInterval(() => {
+
+    if (!hasInProgressAddresses.value) {
+      clearInterval(pollTimer)
+      pollTimer = null
+      return
+    }
+
+    router.reload({
+      only: ['addresses'],
+      preserveScroll: true,
+      preserveState: true,
+    })
+  }, 3000) // every 3 seconds
+}
+
+onMounted(() => {
+  if (hasInProgressAddresses.value) {
+    startPolling()
+  }
+})
+
+watch(hasInProgressAddresses, (newVal) => {
+  if (newVal) {
+    startPolling()
+  } else if (!newVal && pollTimer) {
+    clearInterval(pollTimer)
+    pollTimer = null
+  }
+})
+
+onBeforeUnmount(() => {
+  if (pollTimer) {
+    clearInterval(pollTimer)
+  }
 })
 </script>

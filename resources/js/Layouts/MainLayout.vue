@@ -1,21 +1,19 @@
 <template>
   <header class="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 w-full">
-    <div class="container mx-auto">
-      <nav class="p-4 flex items-center justify-between">
-        <div class="text-lg font-medium">
-          <Link :href="route('address.index')">Lookup</Link>
+    <div class="container mx-auto relative">
+      <nav class="p-4 flex items-center justify-between relative">
+        
+        <div class="absolute left-1/2 -translate-x-1/2 text-xl text-indigo-600 dark:text-indigo-300 font-bold">
+          <Link :href="route('address.index')">Address Manager</Link>
         </div>
-        <div class="text-xl text-indigo-600 dark:text-indigo-300 font-bold text-center">
-          <Link :href="route('address.index')">GeoServer</Link>
-        </div>
-        <div v-if="user" class="flex items-center gap-4">
+
+        <div v-if="user" class="flex items-center gap-4 ml-auto">
           <div class="text-sm text-gray-500">{{ user.name }}</div>
           <Link :href="route('address.create')" class="btn-primary">+ New Address</Link>
-          <div>
-            <Link :href="route('logout')" method="delete" as="button">Logout</Link>
-          </div>
+          <Link :href="route('logout')" method="delete" as="button">Logout</Link>
         </div>
-        <div v-else class="flex items-center gap-2">
+
+        <div v-else class="flex items-center gap-2 ml-auto">
           <Link :href="route('user-account.create')">Register</Link>
           <Link :href="route('login')">Sign-In</Link>
         </div>

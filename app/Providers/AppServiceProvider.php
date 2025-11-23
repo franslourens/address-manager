@@ -31,11 +31,5 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Address::observe(AddressObserver::class);
-    
-        Inertia::share([
-            'addressLookup' => function () {
-               return Session::get('addressLookup');
-            },
-        ]);
     }
 }

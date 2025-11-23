@@ -13,6 +13,8 @@ class Address extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $appends = ['latitude', 'longitude'];
+
     protected $fillable = [
         'line1',
         'line2',
@@ -37,13 +39,28 @@ class Address extends Model
         );
     }
 
-    public function geocode()
+    public function geocodeResults()
     {
-        return $this->hasOne(GeocodeResult::class);
+        return $this->hasMany(GeocodeResult::class);
+    }
+
+    public function latestGeocodeResult()
+    {
+        return $this->hasOne(GeocodeResult::class)->latestOfMany();
     }
 
     public function scopeMostRecent(Builder $query): Builder
     {
         return $query->orderByDesc('created_at');
+    }
+
+    public function getLatitudeAttribute()
+    {
+        return $this->latestGeocodeResult?->latitude;
+    }
+
+    public function getLongitudeAttribute()
+    {
+        return $this->latestGeocodeResult?->longitude;
     }
 }
