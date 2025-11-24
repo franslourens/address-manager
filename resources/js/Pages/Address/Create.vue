@@ -1,88 +1,141 @@
 <template>
   <form @submit.prevent="create">
-    <div class="grid grid-cols-6 gap-4">
-      <div class="col-span-2">
-        <label class="label">Address</label>
-        <input v-model="form.address" type="text" class="input"/>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-xl mx-auto">
+
+      <div class="md:col-span-2">
+        <label class="label">
+          Address <span class="text-red-500">*</span>
+        </label>
+        <input
+          v-model="form.address"
+          type="text"
+          class="input"
+          placeholder="Enter full address"
+        />
         <div v-if="form.errors.address" class="input-error">
           {{ form.errors.address }}
         </div>
       </div>
 
-      <div class="col-span-2">
-        <label class="label">Country Code</label>
-        <input v-model="form.countryCode" type="text" class="input" />
+      <div>
+        <label class="label">Country Code <span class="text-gray-500 text-sm">optional</span></label>
+        <input
+          v-model="form.countryCode"
+          type="text"
+          class="input"
+          placeholder="e.g. ZA"
+        />
         <div v-if="form.errors.countryCode" class="input-error">
           {{ form.errors.countryCode }}
         </div>
       </div>
 
-      <div class="col-span-2">
-        <label class="label">Language Code</label>
-        <input v-model="form.languageCode" type="text" class="input" />
+      <div>
+        <label class="label">Language Code <span class="text-gray-500 text-sm">optional</span></label>
+        <input
+          v-model="form.languageCode"
+          type="text"
+          class="input"
+          placeholder="e.g. en"
+        />
         <div v-if="form.errors.languageCode" class="input-error">
           {{ form.errors.languageCode }}
         </div>
       </div>
 
-      <div class="col-span-4">
-        <label class="label">Latitude</label>
-        <input v-model="form.latitude" type="text" class="input" />
+      <div>
+        <label class="label">Latitude <span class="text-gray-500 text-sm">optional</span></label>
+        <input
+          v-model="form.latitude"
+          type="text"
+          class="input"
+          placeholder="Latitude"
+        />
         <div v-if="form.errors.latitude" class="input-error">
           {{ form.errors.latitude }}
         </div>
       </div>
 
-      <div class="col-span-2">
-        <label class="label">Longitude</label>
-        <input v-model="form.longitude" type="text" class="input" />
+      <div>
+        <label class="label">Longitude <span class="text-gray-500 text-sm">optional</span></label>
+        <input
+          v-model="form.longitude"
+          type="text"
+          class="input"
+          placeholder="Longitude"
+        />
         <div v-if="form.errors.longitude" class="input-error">
           {{ form.errors.longitude }}
         </div>
       </div>
 
-      <div class="col-span-4">
-        <label class="label">Postal Code</label>
-        <input v-model.number="form.postalCode" type="text" class="input" />
+      <div>
+        <label class="label">Postal Code <span class="text-gray-500 text-sm">optional</span></label>
+        <input
+          v-model.number="form.postalCode"
+          type="text"
+          class="input"
+          placeholder="Postal Code"
+        />
         <div v-if="form.errors.postalCode" class="input-error">
           {{ form.errors.postalCode }}
         </div>
       </div>
 
-      <div class="col-span-2">
-        <label class="label">City</label>
-        <input v-model="form.city" type="text" class="input" />
+      <div>
+        <label class="label">City <span class="text-gray-500 text-sm">optional</span></label>
+        <input
+          v-model="form.city"
+          type="text"
+          class="input"
+          placeholder="City"
+        />
         <div v-if="form.errors.city" class="input-error">
           {{ form.errors.city }}
         </div>
       </div>
 
-      <div class="col-span-2">
-        <label class="label">State</label>
-        <input v-model="form.state" type="text" class="input" />
+      <div>
+        <label class="label">State <span class="text-gray-500 text-sm">optional</span></label>
+        <input
+          v-model="form.state"
+          type="text"
+          class="input"
+          placeholder="State or Province"
+        />
         <div v-if="form.errors.state" class="input-error">
           {{ form.errors.state }}
         </div>
       </div>
 
-      <div class="col-span-2">
-        <label class="label">Location Type</label>
-        <input v-model="form.locationType" type="text" class="input" />
+      <div>
+        <label class="label">Location Type <span class="text-gray-500 text-sm">optional</span></label>
+        <input
+          v-model="form.locationType"
+          type="text"
+          class="input"
+          placeholder="Residential, business…"
+        />
         <div v-if="form.errors.locationType" class="input-error">
           {{ form.errors.locationType }}
         </div>
       </div>
 
-       <div class="col-span-2">
-        <label class="label">Building Type</label>
-        <input v-model="form.buildingType" type="text" class="input" />
+      <div>
+        <label class="label">Building Type <span class="text-gray-500 text-sm">optional</span></label>
+        <input
+          v-model="form.buildingType"
+          type="text"
+          class="input"
+          placeholder="House, apartment…"
+        />
         <div v-if="form.errors.buildingType" class="input-error">
           {{ form.errors.buildingType }}
         </div>
       </div>
 
-      <div class="col-span-6">
-        <button type="submit" class="btn-primary">Create</button>
+      <div class="md:col-span-2">
+        <button type="submit" class="btn-primary w-full">Create</button>
       </div>
     </div>
   </form>
